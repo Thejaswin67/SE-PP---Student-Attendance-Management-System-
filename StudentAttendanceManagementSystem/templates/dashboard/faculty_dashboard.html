@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Faculty Dashboard - SAMS{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h1>Faculty Dashboard</h1><p>Welcome, {{ request.user.first_name|default:request.user.username }}.</p></div></div>
+<div class="card"><h2>Assigned Courses</h2>
+{% if course_data %}
+<div class="course-grid">
+{% for item in course_data %}
+<div class="course-card"><h3>{{ item.course.course_code }}</h3><p>{{ item.course.course_name }}</p><p>Semester {{ item.course.semester }}</p><div class="course-stat">Attendance records: {{ item.sessions_marked }}</div><div class="course-stat">Recorded rate: {{ item.attendance_percentage }}%</div><div class="button-row"><a class="btn primary" href="{% url 'mark_attendance' item.course.id %}">Mark Attendance</a><a class="btn secondary" href="{% url 'attendance_history' item.course.id %}">History</a></div></div>
+{% endfor %}
+</div>
+{% else %}<p class="muted">No courses are assigned to you.</p>{% endif %}
+</div>
+{% endblock %}

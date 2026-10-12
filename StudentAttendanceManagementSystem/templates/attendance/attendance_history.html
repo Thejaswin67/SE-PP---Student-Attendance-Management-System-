@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block title %}Attendance History - SAMS{% endblock %}
+{% block content %}<div class="page-heading"><div><h1>{{ course.course_code }} History</h1><p>{{ course.course_name }}</p></div></div><div class="card table-wrapper"><table><thead><tr><th>Date</th><th>Register No.</th><th>Student</th><th>Status</th><th>Marked At</th></tr></thead><tbody>{% for record in records %}<tr><td>{{ record.date }}</td><td>{{ record.student.register_number }}</td><td>{{ record.student.name }}</td><td><span class="status {{ record.status|lower }}">{{ record.status }}</span></td><td>{{ record.marked_at|date:'d-m-Y H:i' }}</td></tr>{% empty %}<tr><td colspan="5">No attendance records yet.</td></tr>{% endfor %}</tbody></table></div>{% endblock %}

@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SAMS{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="topbar">
+    <div class="container topbar-inner">
+        <a class="brand" href="{% url 'dashboard' %}">SAMS</a>
+        {% if user.is_authenticated %}
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            {% if user.userprofile.role == 'FACULTY' %}
+                <a href="{% url 'faculty_dashboard' %}">My Courses</a>
+            {% elif user.userprofile.role == 'STUDENT' %}
+                <a href="{% url 'student_attendance' %}">My Attendance</a>
+            {% elif user.userprofile.role == 'ADMIN' %}
+                <a href="{% url 'admin_dashboard' %}">Admin</a>
+                <a href="{% url 'student_list' %}">Students</a>
+                <a href="{% url 'faculty_list' %}">Faculty</a>
+                <a href="{% url 'course_list' %}">Courses</a>
+                <a href="{% url 'enrollment_list' %}">Enrollments</a>
+                <a href="{% url 'report_page' %}">Reports</a>
+            {% endif %}
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+        {% endif %}
+    </div>
+</header>
+
+{% if messages %}
+<div class="container messages">
+    {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<main class="container page">
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">Student Attendance Management System &copy; 2026</footer>
+<script src="{% static 'js/app.js' %}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

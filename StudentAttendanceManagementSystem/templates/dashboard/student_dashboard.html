@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard - SAMS{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h1>Student Dashboard</h1><p>{{ student.name }} · {{ student.register_number }}</p></div></div>
+{% if notifications %}<div class="alert-panel"><h2>Notifications</h2>{% for note in notifications %}<p>{{ note.message }}</p>{% endfor %}</div>{% endif %}
+<div class="card"><h2>My Subjects</h2>{% if course_data %}<div class="course-grid">{% for item in course_data %}<div class="course-card"><h3>{{ item.course.course_code }}</h3><p>{{ item.course.course_name }}</p><div class="percentage {% if item.percentage < 75 %}danger{% else %}good{% endif %}">{{ item.percentage }}%</div><p>Attendance Percentage</p></div>{% endfor %}</div>{% else %}<p class="muted">No courses enrolled yet.</p>{% endif %}</div>
+{% endblock %}

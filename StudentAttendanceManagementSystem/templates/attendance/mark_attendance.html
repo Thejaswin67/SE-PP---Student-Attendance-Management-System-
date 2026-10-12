@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load sams_tags %}
+{% block title %}Mark Attendance - SAMS{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h1>Mark Attendance</h1><p>{{ course.course_code }} - {{ course.course_name }}</p></div></div>
+<div class="card">
+<form method="post">{% csrf_token %}
+<div class="date-row"><label for="attendance_date">Class Date</label><input id="attendance_date" type="date" name="attendance_date" value="{{ selected_date|date:'Y-m-d' }}" max="{% now 'Y-m-d' %}" required><button class="btn secondary" type="submit">Save Attendance</button></div>
+<div class="table-wrapper"><table><thead><tr><th>Register No.</th><th>Student</th><th>Department</th><th>Attendance</th></tr></thead><tbody>
+{% for enrollment in enrollments %}<tr><td>{{ enrollment.student.register_number }}</td><td>{{ enrollment.student.name }}</td><td>{{ enrollment.student.department.code }}</td>{% with r=existing|get_item:enrollment.student_id %}<td class="status-options"><label><input type="radio" name="status_{{ enrollment.student_id }}" value="PRESENT" {% if r and r.status == "PRESENT" %}checked{% endif %}{% if not r %} checked{% endif %}> Present</label><label><input type="radio" name="status_{{ enrollment.student_id }}" value="ABSENT" {% if r and r.status == "ABSENT" %}checked{% endif %}> Absent</label><label><input type="radio" name="status_{{ enrollment.student_id }}" value="LATE" {% if r and r.status == "LATE" %}checked{% endif %}> Late</label></td>{% endwith %}</tr>{% endfor %}
+</tbody></table></div>
+</form>
+</div>
+{% endblock %}

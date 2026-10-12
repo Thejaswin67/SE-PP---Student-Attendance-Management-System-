@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard - SAMS{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h1>Admin Dashboard</h1><p>Manage the complete attendance system.</p></div></div>
+<div class="stat-grid">
+    <div class="stat"><span>Students</span><strong>{{ students }}</strong></div>
+    <div class="stat"><span>Faculty</span><strong>{{ faculty }}</strong></div>
+    <div class="stat"><span>Courses</span><strong>{{ courses }}</strong></div>
+    <div class="stat"><span>Attendance Records</span><strong>{{ attendance }}</strong></div>
+    <div class="stat"><span>Overall Attendance</span><strong>{{ attendance_rate }}%</strong></div>
+</div>
+<div class="grid-2">
+<section class="card"><h2>Quick Management</h2><div class="quick-links">
+<a href="{% url 'student_add' %}">Add Student</a><a href="{% url 'faculty_add' %}">Add Faculty</a><a href="{% url 'course_add' %}">Add Course</a><a href="{% url 'enrollment_add' %}">Enroll Student</a><a href="{% url 'department_list' %}">Departments</a><a href="{% url 'report_page' %}">Attendance Reports</a>
+</div></section>
+<section class="card"><h2>Department Students</h2>{% for item in department_data %}<div class="bar-row"><span>{{ item.name }}</span><div class="bar"><i style="width: {{ item.students|add:'0' }}0px"></i></div><strong>{{ item.students }}</strong></div>{% empty %}<p class="muted">No departments yet.</p>{% endfor %}</section>
+</div>
+{% endblock %}

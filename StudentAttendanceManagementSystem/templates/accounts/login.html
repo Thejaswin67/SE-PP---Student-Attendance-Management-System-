@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Login - SAMS{% endblock %}
+{% block content %}
+<div class="login-wrapper">
+    <div class="login-card">
+        <h1>Student Attendance Management System</h1>
+        <p class="muted">Sign in to continue</p>
+        <form method="post">
+            {% csrf_token %}
+            <label>Username</label>
+            {{ form.username }}
+            <label>Password</label>
+            {{ form.password }}
+            <button class="btn primary full" type="submit">Login</button>
+        </form>
+        <a class="forgot" href="{% url 'password_reset' %}">Forgot password?</a>
+        <div class="demo-box">
+            <strong>Demo accounts</strong>
+            <p>Admin: admin / admin123</p>
+            <p>Faculty: faculty / faculty123</p>
+            <p>Student: student / student123</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
